@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Berhasil!</title>
+    <object th:include="fragments//fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments//fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace ="fragments/fragment :: navbar"></nav>
+<h3 th:text="'User dengan username ' + ${user.username} + ' berhasil ditambahkan'"></h3>
+<br>
+<a class="btn btn-primary" href="/">Kembali</a>
+</body>
+</html>
