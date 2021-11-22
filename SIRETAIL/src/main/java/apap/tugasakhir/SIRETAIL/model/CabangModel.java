@@ -49,9 +49,9 @@ public class CabangModel implements Serializable {
     @Column(name="no_telp", nullable = false)
     private String noTelp;
 
-    // //Relasi dengan ItemCabangModel
-    // @OneToMany(mappedBy = "cabang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private List<ItemCabangModel> listItemCabang;
+    //Relasi dengan ItemCabangModel
+    @OneToMany(mappedBy = "cabang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ItemCabangModel> listItemCabang;
 
     //Relasi dengan UserModel
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
