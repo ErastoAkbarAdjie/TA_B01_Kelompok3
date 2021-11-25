@@ -1,5 +1,6 @@
 package apap.tugasakhir.SIRETAIL.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class RoleModel implements Serializable {
 
     //Relasi dengan User
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<UserModel> listUser;
 
 }

@@ -10,4 +10,8 @@ public class PageController {
         return "home";
     }
 
+    @RequestMapping ("/login")
+    public String login() {
+        return "login";
+    }
 }
