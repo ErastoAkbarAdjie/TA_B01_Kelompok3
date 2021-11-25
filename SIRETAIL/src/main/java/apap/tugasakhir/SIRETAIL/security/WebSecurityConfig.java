@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
-    protected void configure (HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
@@ -39,16 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailService;
 
+    //@Autowired
+    //public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
+    //    auth.userDetailsService(userDetailService).passwordEncoder(encoder());
+    //}
+
+
     @Autowired
-    public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService).passwordEncoder(encoder());
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .passwordEncoder(encoder())
+                .withUser("admin").password(encoder().encode("admin")).roles(("ADMIN"));
     }
-
-
-//    @Autowired
-//    public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .passwordEncoder(encoder())
-//                .withUser("admin").password(encoder().encode("admin")).roles(("ADMIN"));
-//    }
 }
