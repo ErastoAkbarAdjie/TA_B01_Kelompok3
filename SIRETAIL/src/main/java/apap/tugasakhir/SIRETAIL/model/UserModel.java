@@ -1,5 +1,6 @@
 package apap.tugasakhir.SIRETAIL.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+
 @Entity
 @Table(name = "user")
 
@@ -46,8 +48,9 @@ public class UserModel implements Serializable {
     private List<CabangModel> listCabang;
 
     //Relasi dengan UserModel
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private RoleModel role;
 }
