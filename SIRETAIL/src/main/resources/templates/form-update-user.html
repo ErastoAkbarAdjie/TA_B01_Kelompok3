@@ -14,27 +14,56 @@
             <div class="justify-content-center">
                 <h2>Ubah Data User</h2>
                 <br>
-                <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
+                <div th:if="${role == '[Kepala Retail]'}">
+                    <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
 
-                    Nama : <br>
-                    <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
-                    <br><br>
+                        Nama : <br>
+                        <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                        <br><br>
 
-                    Username : <br>
-                    <input class="form-control" type="text" name="username" th:value="*{username}"/>
-                    <br><br>
+                        Username : <br>
+                        <input class="form-control" type="text" name="username" th:value="*{username}"/>
+                        <br><br>
 
-                    Role : <br>
-                    <select class="form-control" name="role" th:value="*{role}" th:field="*{role}">
-                        <option value="1">Kepala Retail</option>
-                        <option value="2">Manager Cabang</option>
-                        <option value="3">Staff Cabang</option>
-                    </select>
-                    <br><br>
+    <!--                    <div th:if="${role == '[Manager Cabang]'}">-->
+    <!--                        Role : <br>-->
+    <!--                        <input class="form-control" type="hidden" name="role" th:value="*{role}" th:field="*{role}"/>-->
+    <!--                        <input class="form-control" disabled="true" name="role" th:value="*{role}" th:field="*{role}"/>-->
+    <!--                    </div>-->
 
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <a class="btn btn-primary" href="/user/viewAllUser">Kembali</a>
-                </form>
+                            Role : <br>
+                            <select class="form-control" name="role" th:value="*{role}" th:field="*{role}">
+                                <option value="1">Kepala Retail</option>
+                                <option value="2">Manager Cabang</option>
+                                <option value="3">Staff Cabang</option>
+                            </select>
+                        <br><br>
+
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <a class="btn btn-primary" href="/user/viewAllUser">Kembali</a>
+                    </form>
+                </div>
+
+                <div th:if="${role == '[Manager Cabang]'}">
+                    <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
+
+                        Nama : <br>
+                        <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                        <br><br>
+
+                        Username : <br>
+                        <input class="form-control" type="text" name="username" th:value="*{username}"/>
+                        <br><br>
+                        Role : <br>
+                        <input class="form-control" type="hidden" name="role" th:value="*{role}" th:field="*{role}"/>
+                        <input class="form-control" disabled="true" name="role" th:value="*{role.nama}" th:field="*{role.nama}"/>
+
+                        <br><br>
+
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <a class="btn btn-primary" href="/user/viewAllUser">Kembali</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
