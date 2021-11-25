@@ -33,13 +33,15 @@
               <td th:text="${user.username}"></td>
               <td th:text="${user.role.nama}"></td>
               <td>
-                <a class="btn btn-primary" th:href="@{/user/update/} + ${user.id}">Ubah</a>
+                <a class="btn btn-primary" th:href="@{/user/update/} + ${user.id}" th:if="${role == '[Kepala Retail]'}">Ubah</a>
+                <a class="btn btn-primary" th:href="@{/user/update/} + ${user.id}" th:if="${(role == '[Manager Cabang]') && (user.role.nama != 'Kepala Retail')}">Ubah</a>
               </td>
             </tr>
             </tbody>
           </table>
-          <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah user</a>
-
+          <div th:if="${role == '[Kepala Retail]'}">
+            <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah user</a>
+          </div>
         </div>
       </div>
       <br>
