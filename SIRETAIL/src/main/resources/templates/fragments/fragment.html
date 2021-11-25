@@ -36,10 +36,10 @@
                 <a class="nav-item nav-link active text-secondary" th:href="@{/}" th:classappend="${#request.requestURI.equals('/') ? ' font-weight-bold' : ''}">
                     Home<span class="sr-only">(current)</span>
                 </a>
-                <a class="nav-item nav-link active text-secondary" th:href="@{/agensi/viewAll}" th:classappend="${#request.requestURI.startsWith('/agensi') ? ' font-weight-bold' : ''}">
+                <a class="nav-item nav-link active text-secondary" th:href="@{/user/viewAllUser}" th:classappend="${#request.requestURI.startsWith('/user') ? ' font-weight-bold' : ''}">
                     User<span class="sr-only">(current)</span>
                 </a>
-                <a class="nav-item nav-link active text-secondary" th:href="@{/destinasi/viewAll}" th:classappend="${#request.requestURI.startsWith('/destinasi') ? ' font-weight-bold' : ''}">
+                <a class="nav-item nav-link active text-secondary" th:href="@{/cabang/viewAll}" th:classappend="${#request.requestURI.startsWith('/cabang') ? ' font-weight-bold' : ''}">
                     Cabang<span class="sr-only">(current)</span>
                 </a>
             </ul>
