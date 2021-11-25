@@ -15,4 +15,8 @@ public class PageController {
         return "login";
     }
 
+    @RequestMapping ("/viewalluser")
+    public String user() {
+        return "view-all-user";
+    }
 }
