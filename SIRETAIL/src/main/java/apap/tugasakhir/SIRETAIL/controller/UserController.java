@@ -40,7 +40,7 @@ public class UserController {
         return "add-user-success";
     }
 
-    @GetMapping("/viewalluser")
+    @GetMapping("/viewAllUser")
     public String listUser(Model model){
         List<UserModel> listUser = userService.getListUser();
         List<RoleModel> listRole = roleService.getListRole();
