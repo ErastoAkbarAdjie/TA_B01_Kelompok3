@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>SI-RETAIL</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Ubah Data User</h2>
+                <br>
+                <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
+
+                    Nama : <br>
+                    <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                    <br><br>
+
+                    Username : <br>
+                    <input class="form-control" type="text" name="username" th:value="*{username}"/>
+                    <br><br>
+
+                    Role : <br>
+                    <select class="form-control" name="role" th:value="*{role}" th:field="*{role}">
+                        <option value="1">Kepala Retail</option>
+                        <option value="2">Manager Cabang</option>
+                        <option value="3">Staff Cabang</option>
+                    </select>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" href="/user/viewAllUser">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
