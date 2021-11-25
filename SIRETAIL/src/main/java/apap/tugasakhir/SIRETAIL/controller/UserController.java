@@ -39,4 +39,13 @@ public class UserController {
         model.addAttribute("user", user);
         return "add-user-success";
     }
+
+    @GetMapping("/viewalluser")
+    public String listUser(Model model){
+        List<UserModel> listUser = userService.getListUser();
+        List<RoleModel> listRole = roleService.getListRole();
+        model.addAttribute("listUser", listUser);
+        model.addAttribute("listRole", listRole);
+        return "viewall-user";
+    }
 }
