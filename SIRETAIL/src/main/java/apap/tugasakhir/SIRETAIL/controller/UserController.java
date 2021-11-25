@@ -8,10 +8,7 @@ import apap.tugasakhir.SIRETAIL.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,9 +38,33 @@ public class UserController {
     }
 
     @GetMapping("/viewAllUser")
-    public String listUser(Model model){
+    public String listUser(Model model) {
         List<UserModel> listUser = userService.getListUser();
         model.addAttribute("listUser", listUser);
         return "view-all-user";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateUserFormPage(
+            @PathVariable Integer id,
+            Model model
+    ) {
+        UserModel user = userService.getUserById(id);
+
+        model.addAttribute("user", user);
+        return "form-update-user";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUserSubmitPage(
+            @PathVariable Integer id,
+            @ModelAttribute UserModel user,
+            Model model
+    ) {
+        String password = userService.getUserById(id).getPassword();
+        user.setPassword(password);
+        UserModel updatedUser = userService.updateUser(user);
+        model.addAttribute("message", "user berhasil di-update");
+        return "success-page";
     }
 }

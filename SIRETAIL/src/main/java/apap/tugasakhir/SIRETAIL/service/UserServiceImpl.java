@@ -42,4 +42,16 @@ public class UserServiceImpl implements UserService {
         Optional<UserModel> user = Optional.ofNullable(userDb.findByUsername(login));
         return user.orElse(null);
     };
+
+    @Override
+    public UserModel getUserById(Integer id){
+        UserModel user = userDb.findById(id);
+        return user;
+    }
+
+    @Override
+    public UserModel updateUser(UserModel user) {
+        userDb.save(user);
+        return user;
+    }
 }
