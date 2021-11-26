@@ -47,8 +47,8 @@ public class CabangController {
 
     @GetMapping("/cabang/view")
     public String viewDetailCabangPage(
-        @RequestParam(value = "id") Integer id,
-        Model model
+            @RequestParam(value = "id") Integer id,
+            Model model
     ){
         CabangModel cabang = cabangService.getCabangByIdCabang(id);
         model.addAttribute("cabang", cabang);
