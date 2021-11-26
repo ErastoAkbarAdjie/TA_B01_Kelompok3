@@ -7,20 +7,22 @@
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 
-<body>
-<div class="container-fluid">
-  <h2>Hello !</h2>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          Log In
+<body class="bg-primary">
+
+<div class="align-items-center pt-3" style="padding-left: 15%;padding-right: 15%;padding-right: 10%">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center" >
+        <h1 class="font-weight-bold text-primary" style="text-align: center">SIRETAIL</h1>
+        <hr>
+        <div th:if="${param.error}" style="text-align: center">
+          <span style="color: red">Username atau password salah </span>
         </div>
-        <div class="card-body">
-          <div th:if="${param.error}">
-            <span style="color: red">Username atau password salah </span>
-          </div>
-          <form th:action="@{/login}" method="POST">
+        <div th:unless="${param.error}" style="text-align: center">
+          <span class="text-primary">Yuk Coba Login &#128513;</span>
+        </div>
+        <div class="card-body align-content-center align-items-center"  style="align-content: center">
+          <form th:action="@{/login}" method="POST" >
             <div class="row form-group">
               <label class="col-sm-4">Username:</label>
               <input type="text" class="col-sm-8 form-control input-sm" name="username">
@@ -28,9 +30,11 @@
             <div class="row form-group">
               <label class="col-sm-4">Password:</label>
               <input type="password" class="col-sm-8 form-control input-sm" name="password">
+
             </div>
             <div class="row form-group">
-              <button type="submit" class="btn btn-primary">Sign In</button>
+              <label class="col-sm-4"></label>
+              <button type="submit" class="btn btn-primary col-sm-8 form-control" >Sign In</button>
             </div>
           </form>
         </div>
