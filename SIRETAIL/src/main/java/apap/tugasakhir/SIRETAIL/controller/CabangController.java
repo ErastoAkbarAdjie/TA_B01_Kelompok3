@@ -4,12 +4,16 @@ import apap.tugasakhir.SIRETAIL.model.CabangModel;
 import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.service.CabangService;
 import apap.tugasakhir.SIRETAIL.service.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
@@ -39,5 +43,15 @@ public class CabangController {
         cabangService.addCabang(cabang);
         model.addAttribute("namaCabang", cabang.getNama());
         return "add-cabang-success";
+    }
+
+    @GetMapping("/cabang/view")
+    public String viewDetailCabangPage(
+        @RequestParam(value = "id") Integer id,
+        Model model
+    ){
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        model.addAttribute("cabang", cabang);
+        return "view-cabang";
     }
 }
