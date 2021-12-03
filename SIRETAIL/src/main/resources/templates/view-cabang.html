@@ -19,29 +19,45 @@
                     <p th:text="'Ukuran Cabang  : ' + ${cabang.ukuran}"></p>
                     <p th:text="'Nomor Telepon: ' + ${cabang.noTelp}"></p>
                     <p th:text="'Penanggung Jawab: ' + ${cabang.user.nama}"></p>
-                    <div class="col">
+
+                    <div class="col" th:if="${cabang.getListItemCabang().size() != 0}">
+                        <br>
+                        <hr>
+                        <h2>Detail Item Dalam Cabang</h2>
+                        <br>
     
-                    <!-- <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No Destinasi</th>
-                                <th>Negara Destinasi</th>
-                                <th>Bebas Visa</th>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Harga</th>
+                                    <th>Kategori</th>
+                                    <th>Nama</th>
+                                    <th>Stok</th>
+                                    <th>Opsi</th>
+
+                                </tr>
+                            </thead>
+                            <tr th:each="item : ${cabang.getListItemCabang()}">
+                                <td th:text="${item.harga}"></td>
+                                <td th:text="${item.kategori}"></td>
+                                <td th:text="${item.nama}"></td>
+                                <td th:text="${item.stok}"></td>
+                                <td>
+                                    <a class="btn btn-primary">Terapkan Promo</a>
+                                    <a class="btn btn-danger">Hapus Item</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tr th:each="destinasi : ${listDestinasi}">
-                            <td th:text="${destinasi.noDestinasi}"></td>
-                            <td th:text="${destinasi.negaraDestinasi}"></td>
-                            <td th:if="${destinasi.isBebasVisa == false}" th:text="'TIDAK'"></td>
-                            <td th:if="${destinasi.isBebasVisa == true}" th:text="'YA'"></td>
-                        </tr>
-                    </table> -->
+                        </table>
     
-                    <br>
-                    <a class="btn btn-primary" href="/cabang/viewAll">Kembali</a>
+                        <br>
+                    </div>
                 </div>
             </div>
+            <a class="btn btn-secondary" th:href="@{/cabang/viewAllItem/} + ${cabang.id}" th:if="${role == '[Kepala Retail]'}">Tambah Item</a>
+            <a class="btn btn-secondary" th:href="@{/cabang/viewAllItem/} + ${cabang.id}" th:if="${(role == '[Manager Cabang]') && (id_user == cabang.user.id)}">Tambah Item</a>
+            
         </div>
+        <a class="btn btn-primary" href="/cabang/viewAll">Kembali</a> 
     </div>
     
     </body>

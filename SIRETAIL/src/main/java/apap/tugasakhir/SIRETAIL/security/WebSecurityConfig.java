@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/update/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/cabang/viewAllItem/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -43,12 +44,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailService;
 
     //    Jika belum terdapat user pada data base, komen kode di bawah ini
+
     @Autowired
     public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(encoder());
     }
 
     //    Jika belum terdapat user pada data base, nonaktifkan komen di bawah ini
+    
 //    @Autowired
 //    public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication()
