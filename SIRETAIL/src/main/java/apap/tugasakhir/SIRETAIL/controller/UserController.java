@@ -6,6 +6,7 @@ import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.service.RoleService;
 import apap.tugasakhir.SIRETAIL.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class UserController {
     public String listUser(Model model) {
         List<UserModel> listUser = userService.getListUser();
         model.addAttribute("listUser", listUser);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         return "view-all-user";
     }
 
@@ -52,6 +54,7 @@ public class UserController {
         UserModel user = userService.getUserById(id);
 
         model.addAttribute("user", user);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         return "form-update-user";
     }
 

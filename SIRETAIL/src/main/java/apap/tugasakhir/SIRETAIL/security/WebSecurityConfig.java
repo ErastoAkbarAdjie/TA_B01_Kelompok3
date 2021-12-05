@@ -23,8 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
-                .antMatchers("/cabang/add").hasAuthority("Kepala Retail")
-                .antMatchers("/cabang/add").hasAuthority("Manager Cabang")
+                .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/user/update/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/item/viewAllCoupon/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -42,11 +43,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailService;
 
+    //    Jika belum terdapat user pada data base, komen kode di bawah ini
+
     @Autowired
     public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(encoder());
     }
 
+    //    Jika belum terdapat user pada data base, nonaktifkan komen di bawah ini
+    
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication()
