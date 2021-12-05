@@ -19,4 +19,5 @@ public interface ItemCabangService {
     List<ItemCabangModel> getIntersectList(List<ItemCabangModel> listItemCabangOld, List<ItemCabangModel> listItemCabangNew );
     List<ItemCabangModel> getUniqueList(List<ItemCabangModel> listItemCabangOld, List<ItemCabangModel> listItemCabangNew );
     ItemCabangModel updateItemDiskon(Integer idItem, Integer idCoupon, Double discountAmount);
+    void deleteItem(ItemCabangModel item);
 }
