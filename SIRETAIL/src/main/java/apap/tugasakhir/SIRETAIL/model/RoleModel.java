@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "public")
 
 public class RoleModel implements Serializable {
     

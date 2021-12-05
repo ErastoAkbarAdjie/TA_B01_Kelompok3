@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 
 public class UserModel implements Serializable {
     @Id
