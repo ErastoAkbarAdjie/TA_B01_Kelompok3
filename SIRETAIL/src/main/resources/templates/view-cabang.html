@@ -16,7 +16,7 @@
                     <br>
                     <p th:text="'Nama Cabang    : ' + ${cabang.nama}"></p>
                     <p th:text="'Alamat  : ' + ${cabang.alamat}"></p>
-                    <p th:text="'Ukuran Cabang  : ' + ${cabang.ukuran}"></p>
+                    <p th:text="'Ukuran Cabang (dalam m^2)  : ' + ${cabang.ukuran}"></p>
                     <p th:text="'Nomor Telepon: ' + ${cabang.noTelp}"></p>
                     <p th:text="'Penanggung Jawab: ' + ${cabang.user.nama}"></p>
 
@@ -45,7 +45,7 @@
                                 <td>
                                     <a class="btn btn-primary" th:if="${(role == '[Kepala Retail]') && (item.id_promo == null)}" th:href="@{/item/viewAllCoupon/} + ${item.id}">Terapkan Promo</a>
                                     <a class="btn btn-primary" th:if="${(role == '[Manager Cabang]') && (item.id_promo == null)}" th:href="@{/item/viewAllCoupon/} + ${item.id}">Terapkan Promo</a>
-                                    <a class="btn btn-danger">Hapus Item</a>
+                                    <a class="btn btn-danger" th:href="@{/cabang/item/delete/} + ${item.id}">Hapus Item</a>
                                 </td>
                             </tr>
                         </table>

@@ -6,6 +6,7 @@ import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.rest.*;
 import apap.tugasakhir.SIRETAIL.service.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -308,10 +309,23 @@ public class CabangController {
         CabangModel cabang = cabangService.getCabangByIdCabang(idCabang);
         ItemCabangModel item = itemCabangService.getItemCabangById(idItem);
         itemCabangService.updateItemDiskon(idItem, idCoupon, discountAmount);
-        model.addAttribute("id_cabang", cabang.getId());
-        model.addAttribute("id_item", item.getId());
+        model.addAttribute("cabang", item.getCabang());
+        model.addAttribute("item", item);
         return "coupon-apply-success";
     }
 
+    //fitur 15
+    @GetMapping(value = "/cabang/item/delete/{idItem}")
+    public String deleteItem(
+            @PathVariable(value = "idItem", required = true) Integer idItem,
+            Model model
+    ){
+        ItemCabangModel item = itemCabangService.getItemCabangById(idItem);
+        itemCabangService.deleteItem(item);
+        model.addAttribute("cabang", item.getCabang());
+        model.addAttribute("item", item);
+        return"delete-item";
+
+    }
 
 }

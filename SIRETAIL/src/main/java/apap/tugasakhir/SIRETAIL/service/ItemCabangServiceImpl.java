@@ -309,5 +309,10 @@ public class ItemCabangServiceImpl implements ItemCabangService {
         item.setHarga(hargaPromo);
         return itemCabangDb.save(item);
     }
+
+    @Override
+    public void deleteItem(ItemCabangModel item) {
+        itemCabangDb.delete(item);
+    }
     
 }
