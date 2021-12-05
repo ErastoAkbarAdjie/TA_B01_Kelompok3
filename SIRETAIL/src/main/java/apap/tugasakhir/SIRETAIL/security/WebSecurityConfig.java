@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/update/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
-                .antMatchers("/cabang/viewAllItem/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/item/viewAllCoupon/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //    Jika belum terdapat user pada data base, nonaktifkan komen di bawah ini
     
 //    @Autowired
-//    public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication()
 //                .passwordEncoder(encoder())
 //                .withUser("admin").password(encoder().encode("admin")).roles(("ADMIN"));

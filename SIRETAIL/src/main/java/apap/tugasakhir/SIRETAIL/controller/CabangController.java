@@ -4,10 +4,7 @@ import apap.tugasakhir.SIRETAIL.model.CabangModel;
 import apap.tugasakhir.SIRETAIL.model.ItemCabangModel;
 import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.rest.*;
-import apap.tugasakhir.SIRETAIL.service.CabangService;
-import apap.tugasakhir.SIRETAIL.service.ItemCabangService;
-import apap.tugasakhir.SIRETAIL.service.RoleService;
-import apap.tugasakhir.SIRETAIL.service.UserService;
+import apap.tugasakhir.SIRETAIL.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
@@ -36,6 +29,9 @@ public class CabangController {
 
     @Autowired
     private ItemCabangService itemCabangService;
+
+    @Autowired
+    private CouponItemService couponItemService;
 
     @GetMapping("/cabang/add")
     public String addCabangFormPage(Model model){
@@ -283,4 +279,39 @@ public class CabangController {
                 }
             }
         }
+
+        //fitur 12
+    @GetMapping("/item/viewAllCoupon/{id}") //reference id cabang jangan lupa (lihat func diatas)
+    public String listCoupon(
+            @PathVariable Integer id,
+            Model model
+    ){
+        ItemCabangModel item = itemCabangService.getItemCabangById(id);
+        Result<List<couponDetail>> coupon = couponItemService.getListCoupon().block();
+        List<couponDetail> listCoupon = coupon.getResult();
+        model.addAttribute("idCabang", item.getCabang().getId());
+        model.addAttribute("idItem", item.getId());
+        model.addAttribute("listCoupon", listCoupon);
+        model.addAttribute("coupon", coupon);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "view-all-coupon";
+    }
+
+    @RequestMapping("/item/addCoupon/{idCabang}/{idItem}/{idCoupon}/{discountAmount}")
+    public String addCoupon(
+            @PathVariable(value = "idCabang") Integer idCabang,
+            @PathVariable(value = "idItem") Integer idItem,
+            @PathVariable(value = "idCoupon") Integer idCoupon,
+            @PathVariable(value = "discountAmount") Double discountAmount,
+            Model model
+    ) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(idCabang);
+        ItemCabangModel item = itemCabangService.getItemCabangById(idItem);
+        itemCabangService.updateItemDiskon(idItem, idCoupon, discountAmount);
+        model.addAttribute("id_cabang", cabang.getId());
+        model.addAttribute("id_item", item.getId());
+        return "coupon-apply-success";
+    }
+
+
 }

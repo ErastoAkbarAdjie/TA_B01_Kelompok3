@@ -298,5 +298,16 @@ public class ItemCabangServiceImpl implements ItemCabangService {
                 
                 return updatedList;
             }
+
+    @Override
+    public ItemCabangModel updateItemDiskon(Integer idItem, Integer idCoupon, Double discountAmount) {
+        ItemCabangModel item = getItemCabangById(idItem);
+        item.setId_promo(idCoupon);
+        double harga = item.getHarga()-(item.getHarga()*(discountAmount/100));
+        int hargaPromo = (int) harga;
+//        System.out.println(hargaPromo);
+        item.setHarga(hargaPromo);
+        return itemCabangDb.save(item);
+    }
     
 }

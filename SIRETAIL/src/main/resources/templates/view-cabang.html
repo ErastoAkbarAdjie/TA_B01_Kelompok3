@@ -43,7 +43,8 @@
                                 <td th:text="${item.nama}"></td>
                                 <td th:text="${item.stok}"></td>
                                 <td>
-                                    <a class="btn btn-primary">Terapkan Promo</a>
+                                    <a class="btn btn-primary" th:if="${(role == '[Kepala Retail]') && (item.id_promo == null)}" th:href="@{/item/viewAllCoupon/} + ${item.id}">Terapkan Promo</a>
+                                    <a class="btn btn-primary" th:if="${(role == '[Manager Cabang]') && (item.id_promo == null)}" th:href="@{/item/viewAllCoupon/} + ${item.id}">Terapkan Promo</a>
                                     <a class="btn btn-danger">Hapus Item</a>
                                 </td>
                             </tr>
