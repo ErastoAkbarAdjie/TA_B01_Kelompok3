@@ -18,11 +18,11 @@
                     <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
 
                         Nama : <br>
-                        <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                        <input required class="form-control" type="text" name="nama" th:value="*{nama}"/>
                         <br><br>
 
                         Username : <br>
-                        <input class="form-control" type="text" name="username" th:value="*{username}"/>
+                        <input required class="form-control" type="text" name="username" th:value="*{username}"/>
                         <br><br>
 
     <!--                    <div th:if="${role == '[Manager Cabang]'}">-->
@@ -32,7 +32,7 @@
     <!--                    </div>-->
 
                             Role : <br>
-                            <select class="form-control" name="role" th:value="*{role}" th:field="*{role}">
+                            <select required class="form-control" name="role" th:value="*{role}" th:field="*{role}">
                                 <option value="1">Kepala Retail</option>
                                 <option value="2">Manager Cabang</option>
                                 <option value="3">Staff Cabang</option>
@@ -48,16 +48,16 @@
                     <form th:action="@{/user/update/} + ${user.id}" th:object="${user}" method="POST">
 
                         Nama : <br>
-                        <input class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                        <input required class="form-control" type="text" name="nama" th:value="*{nama}"/>
                         <br><br>
 
                         Username : <br>
-                        <input class="form-control" type="text" name="username" th:value="*{username}"/>
+                        <input required class="form-control" type="text" name="username" th:value="*{username}"/>
                         <br><br>
 
                         Role : <br>
-                        <input class="form-control" type="hidden" name="role" th:value="*{role}" th:field="*{role}"/>
-                        <input class="form-control" disabled="true" name="role" th:value="*{role.nama}" th:field="*{role.nama}"/>
+                        <input required class="form-control" type="hidden" name="role" th:value="*{role}" th:field="*{role}"/>
+                        <input required class="form-control" disabled="true" name="role" th:value="*{role.nama}" th:field="*{role.nama}"/>
                         <br><br>
 
                         <button class="btn btn-primary" type="submit">Submit</button>

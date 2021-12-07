@@ -64,10 +64,20 @@ public class UserController {
             @ModelAttribute UserModel user,
             Model model
     ) {
-        String password = userService.getUserById(id).getPassword();
-        user.setPassword(password);
-        UserModel updatedUser = userService.updateUser(user);
-        model.addAttribute("message", "user berhasil di-update");
-        return "success-page";
+        try {
+            String password = userService.getUserById(id).getPassword();
+            user.setPassword(password);
+            UserModel updatedUser = userService.updateUser(user);
+            model.addAttribute("message", "user berhasil di-update");
+            model.addAttribute("pageTitle", "Daftar User");
+            model.addAttribute("url", "/user/viewAllUser");
+            return "success-page";
+        } catch (Exception e) {
+            model.addAttribute("error", "user tidak behasil di-update");
+            model.addAttribute("pageTitle", "Daftar User");
+            model.addAttribute("url", "/user/viewAllUser");
+            return "error-page";
+        }
+
     }
 }

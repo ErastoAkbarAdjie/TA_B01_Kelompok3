@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>SI-RETAIL</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Ubah Data Cabang</h2>
+                <br>
+                <form th:action="@{/cabang/update/} + ${cabang.id}" th:object="${cabang}" method="POST">
+
+                    Nama : <br>
+                    <input required class="form-control" type="text" name="nama" th:value="*{nama}"/>
+                    <br><br>
+
+                    Alamat : <br>
+                    <input required class="form-control" type="text" name="alamat" th:value="*{alamat}"/>
+                    <br><br>
+
+                    No Telepon: <br>
+                    <input required class="form-control" type="text" name="noTelp" th:value="*{noTelp}"/>
+                    <br><br>
+
+                    Ukuran Cabang (dalam m^2): <br>
+                    <input required class="form-control" type="text" name="ukuran" th:value="*{ukuran}"/>
+                    <br><br>
+
+                    Status Cabang: <br>
+                    <input required th:if="${cabang.status == 0}" class="form-control" type="text" name="status" value="Menunggu Persetujuan" disabled />
+                    <input required th:if="${cabang.status == 1}" class="form-control" type="text" name="status" value="Ditolak" disabled />
+                    <input required th:if="${cabang.status == 2}" class="form-control" type="text" name="status" value="Disetujui" disabled />
+                    <br><br>
+
+                    Penanggungjawab Cabang: <br>
+                    <input required class="form-control" type="text" name="user" th:value="*{user.nama}" disabled/>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" href="/cabang/viewAllCabang">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
