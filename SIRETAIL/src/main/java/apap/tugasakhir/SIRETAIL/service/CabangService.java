@@ -10,4 +10,5 @@ public interface CabangService {
     List<CabangModel> getListCabang();
     CabangModel getCabangByIdCabang(Integer idCabang);
     CabangModel updateCabang(CabangModel cabang);
+
 }

@@ -56,6 +56,8 @@
             </div>
             <a class="btn btn-secondary" th:href="@{/cabang/viewAllItem/} + ${cabang.id}" th:if="${role == '[Kepala Retail]'}">Tambah Item</a>
             <a class="btn btn-secondary" th:href="@{/cabang/viewAllItem/} + ${cabang.id}" th:if="${(role == '[Manager Cabang]') && (id_user == cabang.user.id)}">Tambah Item</a>
+            <br/>
+            <a class="btn btn-success" th:href="@{/cabang/{id}/requestUpdateItemStock(id=${cabang.id})}">Request Update Item Stock</a>
             
         </div>
         <a class="btn btn-primary" href="/cabang/viewAll">Kembali</a> 
