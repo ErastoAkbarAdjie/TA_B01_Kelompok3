@@ -2,6 +2,7 @@ package apap.tugasakhir.SIRETAIL.service;
 
 
 import apap.tugasakhir.SIRETAIL.model.CabangModel;
+import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.repository.CabangDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,11 @@ public class CabangServiceImpl implements CabangService {
         Optional<CabangModel> cabang = cabangDb.findById(idCabang);
         if (cabang.isPresent()) return cabang.get();
         else return null;
+    }
+
+    @Override
+    public CabangModel updateCabang(CabangModel cabang) {
+        cabangDb.save(cabang);
+        return cabang;
     }
 }

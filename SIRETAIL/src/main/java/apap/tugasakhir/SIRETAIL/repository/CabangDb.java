@@ -11,4 +11,5 @@ public interface CabangDb extends JpaRepository<CabangModel,Integer> {
     Optional<CabangModel> findById(Long noCabang);
 
 
+
 }

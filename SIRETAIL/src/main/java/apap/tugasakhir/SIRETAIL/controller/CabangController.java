@@ -160,7 +160,6 @@ public class CabangController {
             // handle multiple same item in list
             List<ItemCabangModel> sortedList = itemCabangService.sortList(cabang.getListItemCabang());
             List<ItemCabangModel> deletedSoon = new ArrayList<ItemCabangModel>();
-
             
             //handle if itemCabang.stok > item.stok
             for (ItemCabangModel itemCabang : sortedList) {
@@ -324,8 +323,43 @@ public class CabangController {
         itemCabangService.deleteItem(item);
         model.addAttribute("cabang", item.getCabang());
         model.addAttribute("item", item);
-        return"delete-item";
+        return "delete-item";
+    }
 
+    @GetMapping("/cabang/update/{id}")
+    public String updateCabangFormPage(
+            @PathVariable Integer id,
+            Model model
+    ) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "form-update-cabang";
+    }
+
+    @PostMapping("/cabang/update/{id}")
+    public String updateCabangSubmitPage(
+            @PathVariable Integer id,
+            @ModelAttribute CabangModel cabang,
+            Model model
+    ) {
+        try {
+            CabangModel oldCabang = cabangService.getCabangByIdCabang(id);
+            cabang.setListItemCabang(oldCabang.getListItemCabang());
+            cabang.setStatus(oldCabang.getStatus());
+            cabang.setUser(oldCabang.getUser());
+            CabangModel updatedCabang = cabangService.updateCabang(cabang);
+            model.addAttribute("message", "cabang berhasil di-update");
+            model.addAttribute("pageTitle", "Daftar Cabang");
+            model.addAttribute("url", "/cabang/viewAllCabang");
+            return "success-page";
+        } catch (Exception e) {
+            model.addAttribute("error", "cabang tidak berhasil di-update");
+            model.addAttribute("pageTitle", "Daftar Cabang");
+            model.addAttribute("url", "/cabang/viewAllCabang");
+            return "error-page";
+        }
     }
 
 }
