@@ -22,9 +22,9 @@
 
 | NPM | Nama Lengkap | Fitur yang akan diselesaikan  |
 | ----------| --- | ---------- | 
-| 1906399713 | Erasto Akbar Adjie | 11 |
-| 1906298891 | Farah Husna Nabilah | 7 |
-| 1906299093 | Rajendra Daniel Saksono | 9 |
-| 1906318174 | Tijani Putri Shabrina | 10 |
-| 1906299206 | Yolanda Emanuella Sutanto | 8 |
+| 1906399713 | Erasto Akbar Adjie | 11 13 |
+| 1906298891 | Farah Husna Nabilah | 7 12 15 |
+| 1906299093 | Rajendra Daniel Saksono | 9 17 18 |
+| 1906318174 | Tijani Putri Shabrina | 10 16 |
+| 1906299206 | Yolanda Emanuella Sutanto | 8 14 |
 ---

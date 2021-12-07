@@ -54,10 +54,10 @@
                         Username : <br>
                         <input class="form-control" type="text" name="username" th:value="*{username}"/>
                         <br><br>
+
                         Role : <br>
                         <input class="form-control" type="hidden" name="role" th:value="*{role}" th:field="*{role}"/>
                         <input class="form-control" disabled="true" name="role" th:value="*{role.nama}" th:field="*{role.nama}"/>
-
                         <br><br>
 
                         <button class="btn btn-primary" type="submit">Submit</button>

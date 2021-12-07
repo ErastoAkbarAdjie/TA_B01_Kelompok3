@@ -28,7 +28,7 @@ public class CabangServiceImpl implements CabangService {
     }
 
     @Override
-    public CabangModel getCabangByIdCabang(Long idCabang) {
+    public CabangModel getCabangByIdCabang(Integer idCabang) {
         Optional<CabangModel> cabang = cabangDb.findById(idCabang);
         if (cabang.isPresent()) return cabang.get();
         else return null;
