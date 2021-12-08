@@ -1,4 +1,4 @@
-INSERT IGNORE INTO "role" VALUES
-    (1,'Manager Business'),
-    (2,'Staff_Product'),
-    (3,'Staff_Marketing');
+INSERT IGNORE INTO `role` (`id`, `nama`) VALUES
+(1, 'Kepala Retail'),
+(2, 'Manager Cabang'),
+(3, 'Staff Cabang');
