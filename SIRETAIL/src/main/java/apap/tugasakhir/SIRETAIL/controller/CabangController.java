@@ -71,6 +71,9 @@ public class CabangController {
         String nama = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabangManager", listCabangManager);
+
+        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("id_user", id_user);
