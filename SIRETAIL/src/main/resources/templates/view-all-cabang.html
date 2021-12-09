@@ -25,6 +25,7 @@
                             <th>Ukuran</th>
                             <th>Jumlah Item</th>
                             <th>Status</th>
+                            <th th:if="${(role == '[Kepala Retail]') || (role == '[Manager Cabang]')}">action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,6 +40,7 @@
                                 <a class="btn btn-primary" th:href="@{/cabang/view/} + ${cabang.id}" th:if="${role == '[Manager Cabang]'}">Lihat Detail</a>
                                 <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${role == '[Kepala Retail]'}">Ubah</a>
                                 <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${(role == '[Manager Cabang]') && (user.role.nama != 'Kepala Retail')}">Ubah</a>
+                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') || (role == '[Manager Cabang]')}">Delete</a>
                             </td>
                         </tr>
                         </tbody>

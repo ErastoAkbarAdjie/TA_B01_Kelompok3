@@ -77,6 +77,15 @@ public class CabangController {
         return "view-cabang";
     }
 
+    @GetMapping("/cabang/delete/{id}")
+    public String listCabang (@PathVariable Integer id, Model model) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        String responMessage = cabangService.deleteCabang(cabang);
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "delete-cabang";
+    }
+    
     @GetMapping("/cabang/viewAllItem/{id}") //reference id cabang jangan lupa (lihat func diatas)
     public String listItem(
         @PathVariable Integer id,
