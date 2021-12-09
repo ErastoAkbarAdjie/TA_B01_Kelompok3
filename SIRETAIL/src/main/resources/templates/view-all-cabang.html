@@ -45,9 +45,9 @@
                             <td th:if="${cabang.status} == 2">Disetujui</td>
 
                             <td>
-                                <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${role == '[Kepala Retail]'}">Lihat Detail</a>
-                                <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${role == '[Kepala Retail]'}">Ubah</a>
-                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${role == '[Kepala Retail]'}">Delete</a>
+                                <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Lihat Detail</a>
+                                <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Ubah</a>
+                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Delete</a>
                             </td>
                         </tr>
                         </tbody>
@@ -67,7 +67,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cabang, iterationStatus : ${listCabang}">
+                            <tr th:each="cabang, iterationStatus : ${listCabangManager}">
                                 <td th:if="${id_user == cabang.user.id}"  th:text="${cabang.id}"></td>
                                 <td th:if="${id_user == cabang.user.id}" th:text="${cabang.nama}"></td>
                                 <td th:if="${id_user == cabang.user.id}" th:text="${cabang.noTelp}"></td>
@@ -81,6 +81,37 @@
                                     <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" >Lihat Detail</a>
                                     <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" >Ubah</a>
                                     <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" >Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:if="${role == '[Staff Cabang]'}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>No Telepon</th>
+                                <th>Ukuran</th>
+                                <th>Jumlah Item</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cabang, iterationStatus : ${listCabang}">
+                                <td th:text="${cabang.id}"></td>
+                                <td th:text="${cabang.nama}"></td>
+                                <td th:text="${cabang.noTelp}"></td>
+                                <td th:text="${cabang.ukuran}"></td>
+                                <td th:text="${cabang.getListItemCabang().size()}"></td>
+                                <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
+                                <td th:if="${cabang.status} == 1">Ditolak</td>
+                                <td th:if="${cabang.status} == 2">Disetujui</td>
+
+                                <td>
+                                    <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Staff Cabang]') && (cabang.status != 0)}">Lihat Detail</a>
                                 </td>
                             </tr>
                             </tbody>
