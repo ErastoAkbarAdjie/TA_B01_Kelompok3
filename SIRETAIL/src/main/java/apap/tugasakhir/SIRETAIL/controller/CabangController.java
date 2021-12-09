@@ -57,6 +57,7 @@ public class CabangController {
 
     @GetMapping("/viewAllCabang")
     public String listCabang(Model model) {
+
         List<CabangModel> listCabang = cabangService.getListCabang();
         List<CabangModel> listCabangManager = cabangService.getListCabang();
         List<CabangModel> delete = new ArrayList<CabangModel>();
@@ -70,10 +71,9 @@ public class CabangController {
         }
         String nama = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer id_user = userService.getUserByUsername(nama).getId();
+//        System.out.println("PASSSSS");
         model.addAttribute("listCabangManager", listCabangManager);
 
-        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
-        Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("id_user", id_user);
@@ -91,16 +91,34 @@ public class CabangController {
 
     @GetMapping("/cabang/tolak/{id}")
     public String tolakCabang (@PathVariable Integer id, Model model) {
-        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        List<CabangModel> listcabang = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang.size(); i++){
+            if (listcabang.get(i).getId() == id) {
+                cabang= listcabang.get(i);
+            }
+        }
+
         String responMessage = cabangService.tolakCabang(cabang);
         model.addAttribute("message", responMessage);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        System.out.println("BERHASIL");
         return "delete-cabang";
     }
 
     @GetMapping("/cabang/setuju/{id}")
     public String terimaCabang (@PathVariable Integer id, Model model) {
-        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+
+        List<CabangModel> listcabang2 = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang2.size(); i++){
+            if (listcabang2.get(i).getId() == id) {
+                cabang= listcabang2.get(i);
+            }
+        }
+
         UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         cabang.setUser(user);
 
