@@ -2,6 +2,7 @@ package apap.tugasakhir.SIRETAIL.service;
 
 
 import apap.tugasakhir.SIRETAIL.model.CabangModel;
+import apap.tugasakhir.SIRETAIL.model.ItemCabangModel;
 import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.repository.CabangDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,21 @@ public class CabangServiceImpl implements CabangService {
     public CabangModel updateCabang(CabangModel cabang) {
         cabangDb.save(cabang);
         return cabang;
+    }
+    
+    @Override
+    public String deleteCabang(CabangModel cabang) {
+        List <ItemCabangModel> itemcabang = cabang.getListItemCabang();
+        if (itemcabang.size() == 0) {
+            cabangDb.delete(cabang);
+            return "Cabang berhasil dihapus";
+        }
+        else if (cabang.getStatus() ==0) {
+            cabangDb.delete(cabang);
+            return "Cabang berhasil dihapus";
+        }
+        else {
+            return "Masih terdapat item di dalam cabang";
+        }
     }
 }
