@@ -19,10 +19,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api-docs").permitAll()
+                .antMatchers("/cabang/delete/**").hasAuthority("Kepala Retail")
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/update/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
@@ -53,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      }
 
     //    Jika belum terdapat user pada data base, nonaktifkan komen di bawah ini
-    
+
 //   @Autowired
 //   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //       auth.inMemoryAuthentication()

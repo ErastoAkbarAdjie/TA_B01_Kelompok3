@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>SiRetail</title>
+    <object th:include="fragments//fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments//fragment :: js" th:remove="tag"></object>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"></head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="jususer tify-content-center">
+                <h2>Daftar Cabang</h2>
+
+                <div class="d-flex flex-row-reverse" >
+                    <a class="btn btn-primary" th:href="@{/cabang/viewAll/request}" th:if="${(role == '[Kepala Retail]')}">Periksa Permintaan 🔔️</a>
+                </div>
+                <br>
+
+                <div th:if="*{listCabang.size() !=0}">
+                    <div th:if="${role == '[Kepala Retail]'}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>No Telepon</th>
+                            <th>Ukuran</th>
+                            <th>Jumlah Item</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="cabang, iterationStatus : ${listCabang}">
+                            <td th:text="${cabang.id}"></td>
+                            <td th:text="${cabang.nama}"></td>
+                            <td th:text="${cabang.noTelp}"></td>
+                            <td th:text="${cabang.ukuran}"></td>
+                            <td th:text="${cabang.getListItemCabang().size()}"></td>
+                            <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
+                            <td th:if="${cabang.status} == 1">Ditolak</td>
+                            <td th:if="${cabang.status} == 2">Disetujui</td>
+
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Lihat Detail</a>
+                                <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Ubah</a>
+                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Delete</a>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div th:if="${role == '[Manager Cabang]'}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>No Telepon</th>
+                                <th>Ukuran</th>
+                                <th>Jumlah Item</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cabang, iterationStatus : ${listCabangManager}">
+
+                                <td th:if="${id_user == cabang.user.id}"  th:text="${cabang.id}"></td>
+                                <td th:if="${id_user == cabang.user.id}" th:text="${cabang.nama}"></td>
+                                <td th:if="${id_user == cabang.user.id}" th:text="${cabang.noTelp}"></td>
+                                <td th:if="${id_user == cabang.user.id}" th:text="${cabang.ukuran}"></td>
+                                <td th:if="${id_user == cabang.user.id}" th:text="${cabang.getListItemCabang().size()}"></td>
+                                <td th:if="${(id_user == cabang.user.id) && (cabang.status == 0)}">Menunggu Persetujuan</td>
+                                <td th:if="${(id_user == cabang.user.id) && (cabang.status == 1)}"}>Ditolak</td>
+                                <td th:if="${(id_user == cabang.user.id) && (cabang.status == 2)}"}>Disetujui</td>
+
+                                <td th:if="${id_user == cabang.user.id}">
+                                    <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" >Lihat Detail</a>
+                                    <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" >Ubah</a>
+                                    <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" >Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:if="${role == '[Staff Cabang]'}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>No Telepon</th>
+                                <th>Ukuran</th>
+                                <th>Jumlah Item</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cabang, iterationStatus : ${listCabang}">
+                                <td th:text="${cabang.id}"></td>
+                                <td th:text="${cabang.nama}"></td>
+                                <td th:text="${cabang.noTelp}"></td>
+                                <td th:text="${cabang.ukuran}"></td>
+                                <td th:text="${cabang.getListItemCabang().size()}"></td>
+                                <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
+                                <td th:if="${cabang.status} == 1">Ditolak</td>
+                                <td th:if="${cabang.status} == 2">Disetujui</td>
+
+                                <td>
+                                    <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Staff Cabang]') && (cabang.status != 0)}">Lihat Detail</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div th:if="${role == '[Kepala Retail]'}">
+                        <a th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Tambah cabang</a>
+                    </div>
+                    <div th:if="${role == '[Manager Cabang]'}">
+                        <a th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Tambah cabang</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

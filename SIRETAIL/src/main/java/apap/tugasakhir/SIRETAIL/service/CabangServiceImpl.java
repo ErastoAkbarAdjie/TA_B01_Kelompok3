@@ -1,7 +1,7 @@
 package apap.tugasakhir.SIRETAIL.service;
 
-
 import apap.tugasakhir.SIRETAIL.model.CabangModel;
+import apap.tugasakhir.SIRETAIL.model.ItemCabangModel;
 import apap.tugasakhir.SIRETAIL.model.UserModel;
 import apap.tugasakhir.SIRETAIL.repository.CabangDb;
 import apap.tugasakhir.SIRETAIL.rest.Setting;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,16 @@ public class CabangServiceImpl implements CabangService {
     }
 
     @Override
+    public List<CabangModel> getListCabangRequested( List<CabangModel> listCabang) {
+        List<CabangModel> listRequested = new ArrayList<>();
+        for (int i=0; i<listCabang.size();i++) {
+            if (listCabang.get(i).getStatus()==0) {
+                listRequested.add(listCabang.get(i));
+            }
+        }
+        return (listRequested);
+    }
+    @Override
     public CabangModel getCabangByIdCabang(Integer idCabang) {
         Optional<CabangModel> cabang = cabangDb.findById(idCabang);
         if (cabang.isPresent()) return cabang.get();
@@ -41,5 +52,29 @@ public class CabangServiceImpl implements CabangService {
     public CabangModel updateCabang(CabangModel cabang) {
         cabangDb.save(cabang);
         return cabang;
+    }
+    
+    @Override
+    public String deleteCabang(CabangModel cabang) {
+        List <ItemCabangModel> itemcabang = cabang.getListItemCabang();
+        if (itemcabang.size() == 0) {
+            cabangDb.delete(cabang);
+            return "Cabang berhasil dihapus";
+        }
+        else if (cabang.getStatus() ==0) {
+            cabangDb.delete(cabang);
+            return "Cabang berhasil dihapus";
+        }
+        else {
+            return "Masih terdapat item di dalam cabang";
+        }
+    }
+
+    @Override
+    public String tolakCabang(CabangModel cabang) {
+        String namaCabang = cabang.getNama();
+        cabangDb.delete(cabang);
+        return ("Cabang " + namaCabang + " berhasil di tolak ");
+
     }
 }

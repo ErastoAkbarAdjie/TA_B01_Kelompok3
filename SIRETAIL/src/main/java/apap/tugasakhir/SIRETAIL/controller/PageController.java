@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
-    @RequestMapping("/")
-    public String home(Model model){
-        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        return "home";
-    }
+  @RequestMapping("/")
+  public String home(Model model){
+    model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+    return "home";
+  }
 
-    @RequestMapping ("/login")
-    public String login() {
-        return "login";
-    }
+  @RequestMapping ("/login")
+  public String login() {
+    return "login";
+  }
 
-    @RequestMapping ("/viewalluser")
-    public String user() {
-        return "view-all-user";
-    }
+  @RequestMapping ("/viewalluser")
+  public String user() {
+    return "view-all-user";
+  }
 }

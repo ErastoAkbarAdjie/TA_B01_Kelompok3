@@ -60,6 +60,84 @@ public class CabangController {
         return "add-cabang-success";
     }
 
+    @GetMapping("/viewAllCabang")
+    public String listCabang(Model model) {
+
+        List<CabangModel> listCabang = cabangService.getListCabang();
+        List<CabangModel> listCabangManager = cabangService.getListCabang();
+        List<CabangModel> delete = new ArrayList<CabangModel>();
+        for (CabangModel cabang : listCabang) {
+            if(cabang.getStatus() != 2){
+                delete.add(cabang);
+            }
+        }
+        for (CabangModel del : delete) {
+            listCabangManager.remove(del);
+        }
+        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer id_user = userService.getUserByUsername(nama).getId();
+//        System.out.println("PASSSSS");
+        model.addAttribute("listCabangManager", listCabangManager);
+
+        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("id_user", id_user);
+        return "view-all-cabang";
+    }
+
+    @GetMapping ("/cabang/viewAll/request")
+    public String listCabangRequest (Model model) {
+        List<CabangModel> listCabang = cabangService.getListCabang();
+        List <CabangModel> listCabangRequested = cabangService.getListCabangRequested(listCabang);
+        model.addAttribute("listCabangRequested", listCabangRequested);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "view-all-request-cabang";
+    }
+
+    @GetMapping("/cabang/tolak/{id}")
+    public String tolakCabang (@PathVariable Integer id, Model model) {
+        List<CabangModel> listcabang = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang.size(); i++){
+            if (listcabang.get(i).getId() == id) {
+                cabang= listcabang.get(i);
+            }
+        }
+
+        String responMessage = cabangService.tolakCabang(cabang);
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        System.out.println("BERHASIL");
+        return "delete-cabang";
+    }
+
+    @GetMapping("/cabang/setuju/{id}")
+    public String terimaCabang (@PathVariable Integer id, Model model) {
+
+        List<CabangModel> listcabang2 = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang2.size(); i++){
+            if (listcabang2.get(i).getId() == id) {
+                cabang= listcabang2.get(i);
+            }
+        }
+
+        UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        cabang.setUser(user);
+
+        // status disetujui
+        cabang.setStatus(2);
+        cabangService.addCabang(cabang);
+        model.addAttribute("namaCabang", cabang.getNama());
+
+        String responMessage = "Cabang " + cabang.getNama() + " berhasil diterima";
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "delete-cabang";
+    }
+
     @GetMapping("/cabang/view")
     public String viewDetailCabangPage(
             @RequestParam(value = "id") Integer id,
@@ -74,6 +152,15 @@ public class CabangController {
         return "view-cabang";
     }
 
+    @GetMapping("/cabang/delete/{id}")
+    public String deleteCabang (@PathVariable Integer id, Model model) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        String responMessage = cabangService.deleteCabang(cabang);
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "delete-cabang";
+    }
+    
     @GetMapping("/cabang/viewAllItem/{id}") //reference id cabang jangan lupa (lihat func diatas)
     public String listItem(
         @PathVariable Integer id,
@@ -357,12 +444,12 @@ public class CabangController {
             CabangModel updatedCabang = cabangService.updateCabang(cabang);
             model.addAttribute("message", "cabang berhasil di-update");
             model.addAttribute("pageTitle", "Daftar Cabang");
-            model.addAttribute("url", "/cabang/viewAllCabang");
+            model.addAttribute("url", "/viewAllCabang");
             return "success-page";
         } catch (Exception e) {
             model.addAttribute("error", "cabang tidak berhasil di-update");
             model.addAttribute("pageTitle", "Daftar Cabang");
-            model.addAttribute("url", "/cabang/viewAllCabang");
+            model.addAttribute("url", "/viewAllCabang");
             return "error-page";
         }
     }
