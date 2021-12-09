@@ -54,8 +54,11 @@ public class ItemCabangModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private CabangModel cabang;
 
-    //Relasi dengan Kupon (SI-BUSINESS)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_coupon", referencedColumnName = "id")
-    private CouponModel coupon;
+//    //Relasi dengan Kupon (SI-BUSINESS)
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_coupon", referencedColumnName = "id")
+//    private CouponModel coupon;
+
+    @Column(name="id_promo")
+    private Integer id_promo;
 }

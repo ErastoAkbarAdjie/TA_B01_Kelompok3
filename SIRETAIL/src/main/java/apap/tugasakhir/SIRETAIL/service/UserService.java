@@ -10,4 +10,6 @@ public interface UserService {
     String encrypt(String password);
     UserModel getUserByUsername(String username);
     List<UserModel> getListUser();
+    UserModel getUserById(Integer id);
+    UserModel updateUser(UserModel user);
 }

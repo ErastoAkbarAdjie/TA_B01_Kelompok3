@@ -12,41 +12,37 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="jususer tify-content-center">
-        <h2>Daftar User</h2>
+        <h2>Daftar Coupon</h2>
         <br>
-
-        <div th:if="*{listUser.size() !=0}">
           <table class="table">
             <thead>
             <tr>
               <th>No</th>
+              <th>ID</th>
+              <th>Kode</th>
               <th>Nama</th>
-              <th>Username</th>
-              <th>Role</th>
+              <th>Total Diskon</th>
+              <th>Expiry Date</th>
               <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user, iterationStatus : ${listUser}">
+            <tr th:each="coupon, iterationStatus : ${listCoupon}">
               <td th:text="${iterationStatus.count}"></td>
-              <td th:text="${user.nama}"></td>
-              <td th:text="${user.username}"></td>
-              <td th:text="${user.role.nama}"></td>
-              <td>
-                <a class="btn btn-primary" th:href="@{/user/update/} + ${user.id}" th:if="${role == '[Kepala Retail]'}">Ubah</a>
-                <a class="btn btn-primary" th:href="@{/user/update/} + ${user.id}" th:if="${(role == '[Manager Cabang]') && (user.role.nama != 'Kepala Retail')}">Ubah</a>
-              </td>
+              <td th:text="${coupon.id}"></td>
+              <td th:text="${coupon.couponCode}"></td>
+              <td th:text="${coupon.couponName}"></td>
+              <td th:text="${coupon.discountAmount}"></td>
+              <td th:text="${coupon.expiryDate}"></td>
+              <td> <a class="btn btn-primary" th:href="@{/item/addCoupon/{idCabang}/{idItem}/{idCoupon}/{discountAmount}(idCabang=${idCabang},idItem=${idItem},idCoupon=${coupon.id},discountAmount=${coupon.discountAmount})}">Terapkan Promo</a></td>
             </tr>
             </tbody>
           </table>
-          <div th:if="${role == '[Kepala Retail]'}">
-            <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah user</a>
-          </div>
-        </div>
       </div>
       <br>
     </div>
   </div>
+  <a class="btn btn-primary" href="/">Home</a>
 </div>
 </body>
 </html>

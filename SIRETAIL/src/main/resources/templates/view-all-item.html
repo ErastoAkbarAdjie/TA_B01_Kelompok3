@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SiRetail</title>
+  <object th:include="fragments//fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments//fragment :: js" th:remove="tag"></object>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"></head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="jususer tify-content-center">
+        <h2>Daftar Item</h2>
+        <br>
+        <div th:if="*{listItem.size() !=0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Harga</th>
+              <th>Stok</th>
+              <th>Kategori</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, iterationStatus : ${listItem}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${item.nama}"></td>
+              <td th:text="${item.harga}"></td>
+              <td th:text="${item.stok}"></td>
+              <td th:text="${item.kategori}"></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <br>
+          <hr>
+          <br>
+
+          <h2 th:text="'Form Pengisian Item Cabang untuk cabang ' + ${namaCabang}"></h2>
+          <br>
+          <form th:action="@{/cabang/viewAllItem/} + ${cabang.id}" th:object="${cabang}" method="POST">
+            <!-- <input type="hidden" th:field="*{id}" /> -->
+            <!-- <input type="hidden" th:field="${cabang.getListItemCabang()}" /> -->
+          <table class="table">
+            <button class="btn btn-secondary" name="add" value="add" type="submit">Tambah Row</button>
+            <br>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Kuantitas</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <br>
+            <tbody>
+                <div th:if="${cabang.getListItemCabang()}">
+                    <div th:each="itemCabang,iterationStatus : ${cabang.getListItemCabang()}">
+                        
+                        <tr>
+                            <td>
+                                <select class="custom-select custom-select-sm"
+                                th:field="${cabang.listItemCabang[__${iterationStatus.index}__].uuid}" id="listItem">
+                                    <option 
+                                    th:selected="${(itemCabang.uuid) == (item.uuid)}"
+                                    th:each="item: ${listItem}"
+                                    th:text="${item.nama}"
+                                    th:value="${item.uuid}"
+                                    >
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" min=0 th:field="${cabang.listItemCabang[__${iterationStatus.index}__].stok}"/>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" name="delete" th:value="${iterationStatus.count - 1}" type="submit">Delete</button>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+            </tbody>
+          </table>
+          <button class="btn btn-primary" name="submit" value="submit" type="submit">Submit</button>
+        </form>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <a class="btn btn-primary" href="/">Home</a>
+</div>
+</body>
+</html>

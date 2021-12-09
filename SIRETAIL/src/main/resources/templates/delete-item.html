@@ -9,8 +9,9 @@
 </head>
 <body>
 <nav th:replace ="fragments/fragment :: navbar"></nav>
-<h3 th:text="'Cabang dengan nama ' + ${namaCabang} + ' berhasil ditambahkan'"></h3>
+<h3 th:text="'Item dengan nama ' + ${item.nama} + ' pada cabang ' + ${cabang.nama} + ' berhasil terhapus!'"></h3>
 <br>
-<a class="btn btn-primary" href="/">Kembali</a>
+<a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}">Kembali</a>
+<!--<a class="btn btn-primary" href="/">Kembali</a>-->
 </body>
 </html>

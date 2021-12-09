@@ -12,14 +12,24 @@
 
     <div class="d-flex justify-content-center">
         <div class="m-4">
-            <!-- <h2 th:text = "'Hello '+ ${#httpServletRequest.remoteUser}+ '!'">Masuk Sebagai</h2> -->
-            <h2 style="text-align: center" th:text=" 'Hello '+ ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
+            <h2 style="text-align: center" th:text=" 'Hello '+ ${#httpServletRequest.remoteUser} + '!'"></h2>
             <h2>Selamat datang di SI-RETAIL!</h2>
             <br>
             <div class="d-flex justify-content-center">
-                <a th:href="@{/user/add}" class="mx-2 btn btn-primary">Tambah user</a>
+                <div th:if="${role == '[Kepala Retail]'}">
+                    <a th:href="@{/user/add}" class="mx-2 btn btn-primary">Tambah user</a>
+                </div>
+
                 <a th:href="@{/user/viewAllUser}" class="mx-2 btn btn-primary">Daftar User</a>
-                <a th:href="@{/agensi/add}" class="mx-2 btn btn-outline-primary">Daftar Cabang</a>
+
+                <div th:if="${role == '[Kepala Retail]'}">
+                    <a th:href="@{/cabang/add}" class="mx-2 btn btn-primary">Tambah Cabang</a>
+                </div>
+
+                <div th:if="${role == '[Manager Cabang]'}">
+                    <a th:href="@{/cabang/add}" class="mx-2 btn btn-primary">Tambah Cabang</a>
+                </div>
+
             </div>
         </div>
     </div> 
