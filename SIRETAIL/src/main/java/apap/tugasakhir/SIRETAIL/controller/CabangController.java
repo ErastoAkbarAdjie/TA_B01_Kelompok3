@@ -58,8 +58,11 @@ public class CabangController {
     @GetMapping("/viewAllCabang")
     public String listCabang(Model model) {
         List<CabangModel> listCabang = cabangService.getListCabang();
+        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("id_user", id_user);
         return "view-all-cabang";
     }
 
@@ -404,12 +407,12 @@ public class CabangController {
             CabangModel updatedCabang = cabangService.updateCabang(cabang);
             model.addAttribute("message", "cabang berhasil di-update");
             model.addAttribute("pageTitle", "Daftar Cabang");
-            model.addAttribute("url", "/cabang/viewAllCabang");
+            model.addAttribute("url", "/viewAllCabang");
             return "success-page";
         } catch (Exception e) {
             model.addAttribute("error", "cabang tidak berhasil di-update");
             model.addAttribute("pageTitle", "Daftar Cabang");
-            model.addAttribute("url", "/cabang/viewAllCabang");
+            model.addAttribute("url", "/viewAllCabang");
             return "error-page";
         }
     }
