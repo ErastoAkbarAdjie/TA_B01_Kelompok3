@@ -77,16 +77,34 @@ public class CabangController {
 
     @GetMapping("/cabang/tolak/{id}")
     public String tolakCabang (@PathVariable Integer id, Model model) {
-        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        List<CabangModel> listcabang = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang.size(); i++){
+            if (listcabang.get(i).getId() == id) {
+                cabang= listcabang.get(i);
+            }
+        }
+
         String responMessage = cabangService.tolakCabang(cabang);
         model.addAttribute("message", responMessage);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        System.out.println("BERHASIL");
         return "delete-cabang";
     }
 
     @GetMapping("/cabang/setuju/{id}")
     public String terimaCabang (@PathVariable Integer id, Model model) {
-        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+
+        List<CabangModel> listcabang2 = cabangService.getListCabang();
+
+        CabangModel cabang = new CabangModel();
+        for (int i = 0 ; i< listcabang2.size(); i++){
+            if (listcabang2.get(i).getId() == id) {
+                cabang= listcabang2.get(i);
+            }
+        }
+
         UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         cabang.setUser(user);
 
