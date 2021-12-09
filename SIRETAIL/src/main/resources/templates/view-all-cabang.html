@@ -13,6 +13,9 @@
         <div class="card-body">
             <div class="jususer tify-content-center">
                 <h2>Daftar Cabang</h2>
+                <div class="d-flex flex-row-reverse" >
+                    <a class="btn btn-primary" th:href="@{/cabang/viewAll/request}" th:if="${(role == '[Kepala Retail]')}">Periksa Permintaan 🔔️</a>
+                </div>
                 <br>
 
                 <div th:if="*{listCabang.size() !=0}">

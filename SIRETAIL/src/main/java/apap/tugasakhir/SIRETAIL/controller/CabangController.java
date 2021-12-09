@@ -63,6 +63,41 @@ public class CabangController {
         return "view-all-cabang";
     }
 
+    @GetMapping ("/cabang/viewAll/request")
+    public String listCabangRequest (Model model) {
+        List<CabangModel> listCabang = cabangService.getListCabang();
+        List <CabangModel> listCabangRequested = cabangService.getListCabangRequested(listCabang);
+        model.addAttribute("listCabangRequested", listCabangRequested);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "view-all-request-cabang";
+    }
+
+    @GetMapping("/cabang/tolak/{id}")
+    public String tolakCabang (@PathVariable Integer id, Model model) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        String responMessage = cabangService.tolakCabang(cabang);
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "delete-cabang";
+    }
+
+    @GetMapping("/cabang/setuju/{id}")
+    public String terimaCabang (@PathVariable Integer id, Model model) {
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+        UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        cabang.setUser(user);
+
+        // status disetujui
+        cabang.setStatus(2);
+        cabangService.addCabang(cabang);
+        model.addAttribute("namaCabang", cabang.getNama());
+
+        String responMessage = "Cabang " + cabang.getNama() + " berhasil diterima";
+        model.addAttribute("message", responMessage);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "delete-cabang";
+    }
+
     @GetMapping("/cabang/view")
     public String viewDetailCabangPage(
             @RequestParam(value = "id") Integer id,
@@ -78,7 +113,7 @@ public class CabangController {
     }
 
     @GetMapping("/cabang/delete/{id}")
-    public String listCabang (@PathVariable Integer id, Model model) {
+    public String deleteCabang (@PathVariable Integer id, Model model) {
         CabangModel cabang = cabangService.getCabangByIdCabang(id);
         String responMessage = cabangService.deleteCabang(cabang);
         model.addAttribute("message", responMessage);
