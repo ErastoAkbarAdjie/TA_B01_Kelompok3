@@ -55,6 +55,14 @@ public class CabangController {
         return "add-cabang-success";
     }
 
+    @GetMapping("/viewAllCabang")
+    public String listCabang(Model model) {
+        List<CabangModel> listCabang = cabangService.getListCabang();
+        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        return "view-all-cabang";
+    }
+
     @GetMapping("/cabang/view")
     public String viewDetailCabangPage(
             @RequestParam(value = "id") Integer id,
