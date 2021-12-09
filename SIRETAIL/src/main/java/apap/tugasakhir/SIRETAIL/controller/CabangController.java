@@ -57,6 +57,7 @@ public class CabangController {
 
     @GetMapping("/viewAllCabang")
     public String listCabang(Model model) {
+
         List<CabangModel> listCabang = cabangService.getListCabang();
         List<CabangModel> listCabangManager = cabangService.getListCabang();
         List<CabangModel> delete = new ArrayList<CabangModel>();
@@ -70,10 +71,9 @@ public class CabangController {
         }
         String nama = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer id_user = userService.getUserByUsername(nama).getId();
+//        System.out.println("PASSSSS");
         model.addAttribute("listCabangManager", listCabangManager);
 
-        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
-        Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("id_user", id_user);
