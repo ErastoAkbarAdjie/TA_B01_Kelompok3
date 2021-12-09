@@ -58,6 +58,20 @@ public class CabangController {
     @GetMapping("/viewAllCabang")
     public String listCabang(Model model) {
         List<CabangModel> listCabang = cabangService.getListCabang();
+        List<CabangModel> listCabangManager = cabangService.getListCabang();
+        List<CabangModel> delete = new ArrayList<CabangModel>();
+        for (CabangModel cabang : listCabang) {
+            if(cabang.getStatus() != 2){
+                delete.add(cabang);
+            }
+        }
+        for (CabangModel del : delete) {
+            listCabangManager.remove(del);
+        }
+        String nama = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer id_user = userService.getUserByUsername(nama).getId();
+        model.addAttribute("listCabangManager", listCabangManager);
+
         String nama = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer id_user = userService.getUserByUsername(nama).getId();
         model.addAttribute("listCabang", listCabang);
