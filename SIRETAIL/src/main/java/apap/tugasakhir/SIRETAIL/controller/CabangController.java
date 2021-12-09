@@ -372,8 +372,8 @@ public class CabangController {
             @PathVariable Integer id,
             Model model
     ){
-        Result<List<itemDetail>> item = itemCabangService.getListItem().block();
-        List<itemDetail> listItem = item.getResult();
+        Result<List<itemDetail>> item = itemCabangService.getListItem().block(); // persis kaya eros
+        List<itemDetail> listItem = item.getResult(); // persis kaya eros
 
         CabangModel cabang = cabangService.getCabangByIdCabang(id);
 
@@ -391,7 +391,7 @@ public class CabangController {
             Model model
     ){
         Result<itemDetail> itemDetailResult = itemCabangService.getItemByUuid(payload.getItemId()).block();
-        itemDetail item = itemDetailResult.getResult();
+        itemDetail item = itemDetailResult.getResult(); // dapet objek item nya yg dipilih untuk di update (dr si item)
 
         HttpStatus status = updateStokItemService.createRequest(item, payload.getStok(), id);
         System.out.println(status);

@@ -55,7 +55,7 @@ public class UpdateStokItemServiceImpl implements UpdateStokItemService {
                 idCabang
         );
 
-        return Optional.of(this.webClient.post().uri("create").body(BodyInserters.fromValue(data)).retrieve().toBodilessEntity().block().getStatusCode()).get();
+        return Optional.of(this.webClient.post().uri("create").body(BodyInserters.fromValue(data)).retrieve().toBodilessEntity().block().getStatusCode()).get(); //post ke web service dan get hasil nya (status code)
     }
 
 }
