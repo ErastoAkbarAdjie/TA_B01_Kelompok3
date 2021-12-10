@@ -477,7 +477,7 @@ public class CabangController {
             Model model
     ){
         Result<itemDetail> itemDetailResult = itemCabangService.getItemByUuid(payload.getItemId()).block();
-        itemDetail item = itemDetailResult.getResult(); // dapet objek item nya yg dipilih untuk di update (dr si item)
+        itemDetail item = itemDetailResult.getResult(); // dapet objek item nya yg dipilih untuk di update (dari si item)
 
         HttpStatus status = updateStokItemService.createRequest(item, payload.getStok(), id);
         System.out.println(status);
