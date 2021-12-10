@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.thymeleaf.model.IModelFactory;
 
 @Controller
 public class CabangController {
@@ -33,6 +35,9 @@ public class CabangController {
 
     @Autowired
     private CouponItemService couponItemService;
+
+    @Autowired
+    private UpdateStokItemService updateStokItemService;
 
     @GetMapping("/cabang/add")
     public String addCabangFormPage(Model model){
@@ -448,4 +453,45 @@ public class CabangController {
         }
     }
 
+    @GetMapping("/cabang/{id}/requestUpdateItemStock")
+    public String requestUpdateItemStockFormPage(
+            @PathVariable Integer id,
+            Model model
+    ){
+        Result<List<itemDetail>> item = itemCabangService.getListItem().block(); // persis kaya eros
+        List<itemDetail> listItem = item.getResult(); // persis kaya eros
+
+        CabangModel cabang = cabangService.getCabangByIdCabang(id);
+
+        model.addAttribute("namaCabang", cabang.getNama());
+        model.addAttribute("idCabang", cabang.getId());
+        model.addAttribute("listItem", listItem);
+
+        return "request-update-item-stock-form";
+    }
+
+    @PostMapping("/cabang/{id}/requestUpdateItemStock")
+    public String requestUpdateItemStockSubmit(
+            @PathVariable Integer id,
+            @ModelAttribute UpdateStokItemPayload payload,
+            Model model
+    ){
+        Result<itemDetail> itemDetailResult = itemCabangService.getItemByUuid(payload.getItemId()).block();
+        itemDetail item = itemDetailResult.getResult(); // dapet objek item nya yg dipilih untuk di update (dr si item)
+
+        HttpStatus status = updateStokItemService.createRequest(item, payload.getStok(), id);
+        System.out.println(status);
+
+        if(status.is2xxSuccessful()) {
+            model.addAttribute("message", "permohonan update stok berhasil dikirim");
+            model.addAttribute("pageTitle", "Detail Cabang");
+            model.addAttribute("url", "/cabang/view?id=" + id);
+            return "success-page";
+        } else {
+            model.addAttribute("message","permohonan update stok gagal dikirim");
+            model.addAttribute("pageTitle", "Detail Cabang");
+            model.addAttribute("url", "/cabang/view?id=" + id);
+            return "error-page";
+        }
+    }
 }
