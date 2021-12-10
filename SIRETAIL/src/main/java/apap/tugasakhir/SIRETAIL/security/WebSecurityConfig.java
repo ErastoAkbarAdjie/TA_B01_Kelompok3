@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cabang/delete/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/cabang/tolak/**").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/setuju/**").hasAuthority("Kepala Retail")
-                // .antMatchers("/user/add").hasAuthority("Kepala Retail")
+                .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/user/update/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/item/viewAllCoupon/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
@@ -52,17 +52,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //    Jika belum terdapat user pada data base, komen kode di bawah ini
 
-    //  @Autowired
-    //  public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
-    //      auth.userDetailsService(userDetailService).passwordEncoder(encoder());
-    //  }
+     @Autowired
+     public void configAuthentication (AuthenticationManagerBuilder auth) throws Exception {
+         auth.userDetailsService(userDetailService).passwordEncoder(encoder());
+     }
 
     //    Jika belum terdapat user pada data base, nonaktifkan komen di bawah ini
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-      auth.inMemoryAuthentication()
-              .passwordEncoder(encoder())
-              .withUser("admin").password(encoder().encode("admin")).roles(("ADMIN"));
-  }
+//   @Autowired
+//   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//       auth.inMemoryAuthentication()
+//               .passwordEncoder(encoder())
+//               .withUser("admin").password(encoder().encode("admin")).roles(("ADMIN"));
+//   }
 }
