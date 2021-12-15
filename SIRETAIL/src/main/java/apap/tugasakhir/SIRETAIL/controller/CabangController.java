@@ -97,41 +97,46 @@ public class CabangController {
     public String tolakCabang (@PathVariable Integer id, Model model) {
         List<CabangModel> listcabang = cabangService.getListCabang();
 
-        CabangModel cabang = new CabangModel();
-        for (int i = 0 ; i< listcabang.size(); i++){
-            if (listcabang.get(i).getId() == id) {
-                cabang= listcabang.get(i);
-            }
-        }
+        CabangModel cabangDihapus = cabangService.getCabangByIdCabang(id);
+//        System.out.println("CEK ID CABANG 1 " + testCabang.getId());
 
-        String responMessage = cabangService.tolakCabang(cabang);
+//        CabangModel cabang = new CabangModel();
+//        for (int i = 0 ; i< listcabang.size(); i++){
+//            if (listcabang.get(i).getId() == id) {
+//                cabang= listcabang.get(i);
+//                System.out.println("CEK ID CABANG 2 " + cabang.getId());
+//            }
+//        }
+
+        String responMessage = cabangService.tolakCabang(cabangDihapus);
         model.addAttribute("message", responMessage);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        System.out.println("BERHASIL");
         return "delete-cabang";
     }
 
     @GetMapping("/cabang/setuju/{id}")
     public String terimaCabang (@PathVariable Integer id, Model model) {
 
-        List<CabangModel> listcabang2 = cabangService.getListCabang();
+//        List<CabangModel> listcabang2 = cabangService.getListCabang();
 
-        CabangModel cabang = new CabangModel();
-        for (int i = 0 ; i< listcabang2.size(); i++){
-            if (listcabang2.get(i).getId() == id) {
-                cabang= listcabang2.get(i);
-            }
-        }
+        CabangModel cabangDisetujui= cabangService.getCabangByIdCabang(id);
+
+//        CabangModel cabang = new CabangModel();
+//        for (int i = 0 ; i< listcabang2.size(); i++){
+//            if (listcabang2.get(i).getId() == id) {
+//                cabang= listcabang2.get(i);
+//            }
+//        }
 
         UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        cabang.setUser(user);
+        cabangDisetujui.setUser(user);
 
         // status disetujui
-        cabang.setStatus(2);
-        cabangService.addCabang(cabang);
-        model.addAttribute("namaCabang", cabang.getNama());
+        cabangDisetujui.setStatus(2);
+        cabangService.addCabang(cabangDisetujui);
+        model.addAttribute("namaCabang", cabangDisetujui.getNama());
 
-        String responMessage = "Cabang " + cabang.getNama() + " berhasil diterima";
+        String responMessage = "Cabang " + cabangDisetujui.getNama() + " berhasil diterima";
         model.addAttribute("message", responMessage);
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         return "delete-cabang";
