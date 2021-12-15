@@ -8,10 +8,21 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar('Home')"></nav>
-<div class="container-fluid">
-    <h2>Halaman tidak ditemukan</h2>
-    <a class="btn btn-primary" th:href="@{/}">Kembali ke Home</a>
+<nav th:replace ="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center" style="text-align:center">
+                <h2>Halaman tidak ditemukan</h2>
+                <a class="btn btn-primary" th:href="@{/}">Kembali ke Home</a>
+            </div>
+        </div>
+    </div>
+    <div class ="row mt-3">
+        <div class ="col-md-12 pt-4" style="text-align:center">
+            <p>Copyright © SiRetail - 2021</p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -95,10 +95,7 @@ public class CabangController {
 
     @GetMapping("/cabang/tolak/{id}")
     public String tolakCabang (@PathVariable Integer id, Model model) {
-        List<CabangModel> listcabang = cabangService.getListCabang();
-
         CabangModel cabangDihapus = cabangService.getCabangByIdCabang(id);
-//        System.out.println("CEK ID CABANG 1 " + testCabang.getId());
 
 //        CabangModel cabang = new CabangModel();
 //        for (int i = 0 ; i< listcabang.size(); i++){
@@ -116,17 +113,7 @@ public class CabangController {
 
     @GetMapping("/cabang/setuju/{id}")
     public String terimaCabang (@PathVariable Integer id, Model model) {
-
-//        List<CabangModel> listcabang2 = cabangService.getListCabang();
-
         CabangModel cabangDisetujui= cabangService.getCabangByIdCabang(id);
-
-//        CabangModel cabang = new CabangModel();
-//        for (int i = 0 ; i< listcabang2.size(); i++){
-//            if (listcabang2.get(i).getId() == id) {
-//                cabang= listcabang2.get(i);
-//            }
-//        }
 
         UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         cabangDisetujui.setUser(user);

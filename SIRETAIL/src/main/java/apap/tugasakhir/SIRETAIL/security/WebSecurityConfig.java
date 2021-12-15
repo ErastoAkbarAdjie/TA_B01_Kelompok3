@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config").permitAll()
                 .antMatchers("/cabang/delete/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
+                .antMatchers("/cabang/viewAll/request").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/tolak/**").hasAuthority("Kepala Retail")
                 .antMatchers("/cabang/setuju/**").hasAuthority("Kepala Retail")
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
