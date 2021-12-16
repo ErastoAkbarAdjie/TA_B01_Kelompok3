@@ -47,7 +47,8 @@
                             <td>
                                 <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Lihat Detail</a>
                                 <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Ubah</a>
-                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status != 0)}">Delete</a>
+                                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(role == '[Kepala Retail]') && (cabang.status == 0 || cabang.status == 2)}">Delete</a>
+
 
                             </td>
                         </tr>
@@ -82,7 +83,7 @@
                                 <td th:if="${id_user == cabang.user.id}">
                                     <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" >Lihat Detail</a>
                                     <a class="btn btn-primary" th:href="@{/cabang/update/} + ${cabang.id}" >Ubah</a>
-                                    <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" >Delete</a>
+                                    <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}" th:if="${(cabang.status == 0 || cabang.status == 2)}" >Delete</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -114,6 +115,7 @@
 
                                 <td>
                                     <a class="btn btn-primary" th:href="@{/cabang/view(id=${cabang.id})}" th:if="${(role == '[Staff Cabang]') && (cabang.status != 0)}">Lihat Detail</a>
+                                    <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}"th:if="${(role == '[Staff Cabang]') && (cabang.status == 0 || cabang.status == 2) }">Delete</a>
                                 </td>
                             </tr>
                             </tbody>
