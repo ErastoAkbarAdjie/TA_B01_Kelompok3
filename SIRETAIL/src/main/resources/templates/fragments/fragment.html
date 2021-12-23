@@ -44,8 +44,9 @@
                 </a>
             </ul>
             <ul class="navbar-nav pull-right">
-                <a class="nav-item nav-link active" th:href="@{/logout}">Logout</a>
+                <a class="nav-item nav-link active" onclick="return confirm('Apakah Anda yakin ingin logout?\n 👣 👣 👣');" th:href="@{/logout}">Logout</a>
             </ul>
+
         </div>
     </nav>
 </body>
